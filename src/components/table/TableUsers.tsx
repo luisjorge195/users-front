@@ -11,12 +11,12 @@ import TablePagination from "@mui/material/TablePagination";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { deleteUser } from "@/utils/executeQuery";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModalUser from "../modal";
 import HeadTable from "./HeadTable";
 import useTableUsers from "@/customHooks/useTableUsers";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 export default function TableUsers() {
   const {
@@ -29,12 +29,13 @@ export default function TableUsers() {
     open,
     handleOpen,
     handleClose,
+    setPost,
     rows,
   } = useTableUsers();
 
   const removeUser = (id: string) => {
     const baseURL = `${process.env.NEXT_PUBLIC_ANALYTICS_URL}/${id}`;
-    deleteUser(baseURL);
+    deleteUser(baseURL,setPost, id);
   };
 
   return (
@@ -58,7 +59,6 @@ export default function TableUsers() {
       >
         <h1 style={{ margin: "1rem" }}>Gestiona tus usuarios</h1>
       </div>
-
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 1050, minHeight: 350 }}
@@ -112,8 +112,9 @@ export default function TableUsers() {
           open={open}
           dataToEdit={dataToEdit}
         />
-        <ToastContainer />
+        
       </TableContainer>
+      <ToastContainer />
     </div>
   );
 }

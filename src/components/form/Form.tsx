@@ -10,41 +10,48 @@ import { insertUser, updateUser } from "@/utils/executeQuery";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import useTableUsers from "@/customHooks/useTableUsers";
 
 export default function Form({ dataToEdit, handleClose }: any) {
-  const [data, setData] = React.useState({
-    nombre: dataToEdit === undefined ? "" : dataToEdit?.nombre,
-    fechaNacimiento:
-      dataToEdit === undefined ? null : dataToEdit?.fechaNacimiento,
-    genero: dataToEdit === undefined ? "" : dataToEdit?.genero,
-  });
+  const initialData = {
+    nombre: dataToEdit?.nombre || "",
+    fechaNacimiento: dataToEdit?.fechaNacimiento || null,
+    genero: dataToEdit?.genero || "",
+  };
+  const [data, setData] = React.useState(initialData);
+  const {setPost, post} = useTableUsers()
   const saveUser = () => {
     const baseURL =
       dataToEdit !== undefined
         ? `${process.env.NEXT_PUBLIC_ANALYTICS_URL}/${dataToEdit?.id}`
         : process.env.NEXT_PUBLIC_ANALYTICS_URL || "";
-    dataToEdit === undefined
+      dataToEdit === undefined
       ? insertUser(baseURL, data)
-      : updateUser(baseURL, data, handleClose);
-
-    setData({ nombre: "", fechaNacimiento: null, genero: "" });
+      : updateUser(baseURL, data, handleClose, setPost, dataToEdit, post);
+    
+    !dataToEdit?.id && setData(initialData);
   };
+ 
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="m-4 ">
-        <div style={{ textAlign: "end", marginBottom: "2rem" }}>
-          <Link
-            style={{
-              backgroundColor: "black",
-              padding: "1rem",
-              color: "white",
-            }}
-            href="/usuario/usuario-consulta"
-          >
-            Consultar usuarios
-          </Link>
-        </div>
+        {dataToEdit === undefined ? (
+          <div style={{ textAlign: "end", marginBottom: "2rem" }}>
+            <Link
+              style={{
+                backgroundColor: "black",
+                padding: "1rem",
+                color: "white",
+              }}
+              href="/usuario/usuario-consulta"
+            >
+              Consultar usuarios
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
         <div
           style={{
             fontSize: "1.7rem",

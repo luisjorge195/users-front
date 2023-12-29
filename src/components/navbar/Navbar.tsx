@@ -8,16 +8,36 @@ const Navbar = () => {
         backgroundColor: "black",
         height: "60px",
         padding: "2px",
-       
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        
       }}
-      className="flex justify-between items-center mx-12 w-full"
     >
-      <Link href="/usuario/usuario-consulta" style={{ color: "white",  marginLeft: "2rem",
-        marginRight: "2rem", width:'100%', flex:'1' }}>
-        Gestión de usuarios
+      <Link
+        href="/usuario/usuario-consulta"
+        style={{
+          color: "white",
+          width: "100%",
+          flex: "1",
+          marginLeft: "2rem",
+          marginRight: "2rem",
+          
+        }}
+      >
+        Gestionar usuarios
       </Link>
-      <Link href="/" style={{ color: "white", width:'100%', flex:'1' ,marginLeft: "2rem",
-        marginRight: "2rem", }}>
+      <Link
+        href="/"
+        style={{
+          textAlign:"end",
+          color: "white",
+          width: "100%",
+          flex: "1",
+          marginLeft: "2rem",
+          marginRight: "2rem",
+        }}
+      >
         Salir
       </Link>
     </div>
