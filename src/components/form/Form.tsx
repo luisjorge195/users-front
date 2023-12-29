@@ -14,12 +14,14 @@ import useTableUsers from "@/customHooks/useTableUsers";
 
 export default function Form({ dataToEdit, handleClose }: any) {
   const initialData = {
-    nombre: dataToEdit?.nombre || "",
-    fechaNacimiento: dataToEdit?.fechaNacimiento || null,
-    genero: dataToEdit?.genero || "",
+    nombre: "",
+    fechaNacimiento:  null,
+    genero:"",
   };
   const [data, setData] = React.useState(initialData);
   const {setPost, post} = useTableUsers()
+
+
   const saveUser = () => {
     const baseURL =
       dataToEdit !== undefined
@@ -78,13 +80,13 @@ export default function Form({ dataToEdit, handleClose }: any) {
             marginBottom: "4.2rem",
           }}
         >
-          <Grid item xs={12}>
             <TextField
               required
               fullWidth
               label="Nombre completo"
               variant="outlined"
-              defaultValue={dataToEdit?.nombre || ""}
+              sx={{marginBottom:"1rem"}}
+              // defaultValue={dataToEdit?.nombre || ""}
               onChange={(e) => {
                 setData({
                   ...data,
@@ -92,9 +94,7 @@ export default function Form({ dataToEdit, handleClose }: any) {
                 });
               }}
             />
-          </Grid>
 
-          <Grid item xs={12}>
             <TextField
               label="Fecha de Nacimiento"
               variant="outlined"
@@ -104,9 +104,9 @@ export default function Form({ dataToEdit, handleClose }: any) {
                 shrink: true,
               }}
               InputProps={{
-                style: { padding: "10.5px 14px" }, // Ajusta el espaciado según sea necesario
+                style: { padding: "10.5px 14px"}, // Ajusta el espaciado según sea necesario
               }}
-              defaultValue={dataToEdit?.fechaNacimiento}
+              // defaultValue={dataToEdit?.fechaNacimiento}
               onChange={(e: any) => {
                 setData({
                   ...data,
@@ -115,17 +115,15 @@ export default function Form({ dataToEdit, handleClose }: any) {
                 });
               }}
             />
-          </Grid>
 
-          <Grid item xs={12}>
             <Autocomplete
               disablePortal
               id="combo-box-demo"
               options={[{ label: "Masculino" }, { label: "Femenino" }]}
-              defaultValue={
-                dataToEdit?.genero !== "" && { label: dataToEdit?.genero }
-              }
-              sx={{ width: "100%" }}
+              // defaultValue={
+              //   dataToEdit?.genero !== "" && { label: dataToEdit?.genero }
+              // }
+              sx={{ width: "100%", marginTop:"1rem" }}
               getOptionLabel={(option) => option.label || "Seleccionar"} // Devuelve 'Seleccionar' si la etiqueta es undefined
               renderInput={(params) => <TextField {...params} label="Género" />}
               onChange={(event: any, value: any) => {
@@ -136,7 +134,6 @@ export default function Form({ dataToEdit, handleClose }: any) {
               }}
               aria-required
             />
-          </Grid>
           <div style={{ width: "100%", marginTop: "2rem" }}>
             <button
               style={{
@@ -145,7 +142,7 @@ export default function Form({ dataToEdit, handleClose }: any) {
                 padding: "1.2rem",
                 width: "100%",
               }}
-              onClick={() => saveUser()}
+              onClick={saveUser}
             >
               {dataToEdit === undefined ? "Crear Usuario" : "Editar usuario"}
             </button>
