@@ -14,9 +14,9 @@ import useTableUsers from "@/customHooks/useTableUsers";
 
 export default function Form({ dataToEdit, handleClose }: any) {
   const initialData = {
-    nombre: "",
-    fechaNacimiento:  null,
-    genero:"",
+    nombre: dataToEdit?.nombre  || "",
+    fechaNacimiento:  dataToEdit?.fechaNacimiento || null,
+    genero:dataToEdit?.genero || "",
   };
   const [data, setData] = React.useState(initialData);
   const {setPost, post} = useTableUsers()
